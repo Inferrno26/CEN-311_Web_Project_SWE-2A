@@ -4,10 +4,13 @@ This repository contains the semester-long web development project for **CEN 311
 
 The project is a collaborative effort by:
 
-- **Alba Gjergji**
-- **Ana Gjergji**
-- **Dion Hasanbashaj**
-
+- Ana Gjergji
+- Alba Gjergji
+- Henri Aliaj
+- Isuf Çelhaka
+- Amanda Shirka
+- Dion Hasanbashaj
+  
 ## Project Overview
 
 This project is being built step by step during the semester by following the topics covered in class. As we progress through the course, we will continue expanding the application by integrating new concepts and technologies into a complete web-based system.
