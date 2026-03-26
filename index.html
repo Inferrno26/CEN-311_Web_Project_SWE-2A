@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pet Adoption Center Management System</title>
+  <link rel="stylesheet" href="css/global.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <h1>Pet Adoption Center</h1>
+    </div>
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="pages/pets.html">Pets</a></li>
+        <li><a href="pages/adopters.html">Adopters</a></li>
+        <li><a href="pages/applications.html">Applications</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>Pet Adoption Center Management System</h2>
+      <p>
+        A front-end CRUD web application for managing pets, adopters,
+        and adoption applications using HTML, CSS, JavaScript, and localStorage.
+      </p>
+    </section>
+
+    <section class="dashboard-section">
+      <h3>Dashboard Overview</h3>
+      <div class="card-grid">
+        <div class="dashboard-card">
+          <h4>Total Pets</h4>
+          <p class="card-value">0</p>
+        </div>
+
+        <div class="dashboard-card">
+          <h4>Total Adopters</h4>
+          <p class="card-value">0</p>
+        </div>
+
+        <div class="dashboard-card">
+          <h4>Total Applications</h4>
+          <p class="card-value">0</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="quick-links">
+      <h3>Quick Access</h3>
+      <div class="card-grid">
+        <a class="quick-card" href="pages/pets.html">
+          <h4>Manage Pets</h4>
+          <p>View, add, edit, and remove pet records.</p>
+        </a>
+
+        <a class="quick-card" href="pages/adopters.html">
+          <h4>Manage Adopters</h4>
+          <p>Store and maintain adopter information.</p>
+        </a>
+
+        <a class="quick-card" href="pages/applications.html">
+          <h4>Manage Applications</h4>
+          <p>Track adoption applications and their status.</p>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Pet Adoption Center Management System</p>
+  </footer>
+
+  <script src="js/shared.js"></script>
+</body>
+</html>
