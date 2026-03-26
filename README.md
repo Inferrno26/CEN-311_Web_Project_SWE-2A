@@ -1,49 +1,54 @@
-# CEN 311 Web Development Project
+# Pet Adoption Center Management System
 
-This repository contains the semester-long web development project for **CEN 311**, developed incrementally throughout the course as new front-end, back-end, and database concepts are introduced and applied.
+A front-end CRUD web application developed for our **CEN 311 Web Development** project.  
+This project simulates a simple **Pet Adoption Center Management System**, allowing users to manage pets, adopters, and adoption applications through a clean interface using **HTML, CSS, JavaScript, and localStorage**.
 
-The project is a collaborative effort by:
-
-- Ana Gjergji
-- Alba Gjergji
-- Henri Aliaj
-- Isuf Çelhaka
-- Amanda Shirka
-- Dion Hasanbashaj
-  
 ## Project Overview
 
-This project is being built step by step during the semester by following the topics covered in class. As we progress through the course, we will continue expanding the application by integrating new concepts and technologies into a complete web-based system.
+The goal of this project is to build a browser-based management system that demonstrates the core CRUD operations:
 
-The final theme of the project may evolve as development progresses, but the goal remains the same: to design and implement a structured, functional, and well-organized full-stack web application.
+- **Create** new records
+- **Read** and display stored records
+- **Update** existing records
+- **Delete** records
 
-## Objectives
+All data is stored locally in the browser using **localStorage**, making the application lightweight and easy to test without a backend.
 
-- Apply web development concepts learned in class
-- Build a project incrementally throughout the semester
-- Practice front-end, back-end, and database integration
-- Maintain the project using GitHub for version control and collaboration
-- Create a complete and functional web application by the end of the course
+## Main Features
 
-## Technologies
+- Manage pet records
+- Manage adopter records
+- Manage adoption applications
+- Edit and delete existing entries
+- Store data in browser localStorage
+- Clean and user-friendly interface
+- Simple navigation between pages
+- Modular front-end structure for team collaboration
 
-The technologies used in this project will be updated as the course progresses. They may include:
+## Technologies Used
 
-- HTML
-- CSS
-- JavaScript
-- Back-end technologies introduced in class
-- Database technologies introduced in class
-- Git and GitHub for version control
+- **HTML5**
+- **CSS3**
+- **JavaScript (Vanilla JS)**
+- **localStorage**
 
-## Development Approach
+## Project Structure
 
-This repository will be updated regularly as new course material is covered. Each stage of development will reflect the concepts learned during that period, allowing the project to grow gradually from a basic structure into a more complete application.
-
-## Repository Status
-
-This repository is currently in active development and serves as the main workspace for the CEN 311 project.
-
-## Notes
-
-More detailed information about the project theme, features, structure, and setup will be added as development continues.
+```text
+pet-adoption-center/
+├── index.html
+├── pages/
+│   ├── pets.html
+│   ├── adopters.html
+│   └── applications.html
+├── css/
+│   ├── global.css
+│   ├── pets.css
+│   ├── adopters.css
+│   └── applications.css
+├── js/
+│   ├── shared.js
+│   ├── pets.js
+│   ├── adopters.js
+│   └── applications.js
+└── assets/
