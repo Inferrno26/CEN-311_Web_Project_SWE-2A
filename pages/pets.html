@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pets | Pet Adoption Center</title>
   <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/pets.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
+
 <body>
+
   <header class="topbar">
     <div class="logo">
       <h1>Pet Adoption Center</h1>
     </div>
+   
     <nav class="navbar">
       <ul class="nav-list">
         <li><a href="../index.html">Home</a></li>
@@ -19,28 +25,101 @@
         <li><a href="applications.html">Applications</a></li>
       </ul>
     </nav>
+
   </header>
 
   <main class="container">
+  
     <section class="page-header">
-      <div>
-        <h2>Pets</h2>
-        <p>Manage all pet records in the system.</p>
+      <div class = "header-text">
+        <h2>Available pets</h2>
+        <p>Find your perfect companion!</p>
       </div>
       <button class="primary-btn" type="button">Add Pet</button>
+
+
     </section>
+
+    <div class = top-menu> 
+
+     <div class="filters">
+    
+      <div class="filter-type">
+     <label id = "type-label" for="type">Filter by Type </label>
+     <select id="type">
+        <option>All</option>
+        <option>Dog</option>
+        <option>Cat</option>
+        <option>Rabbit</option>
+     </select>
+      </div>
+
+     <div class="filter-status">
+     <label id="status-label" for="status">Filter by Status</label>
+      <select id="status">
+        <option>All</option>
+        <option>Available</option>
+        <option>Pending</option>
+        <option>Adopted</option>
+     </select>
+     </div>
+
+     </div>
 
     <section class="toolbar">
-      <input type="text" placeholder="Search pets..." class="search-input" />
+      <label id = "search-label" for="search"> Search </label>
+      <input type="text" placeholder="Search pets..." class="search-input" />   
     </section>
 
+  </div> 
+
     <section class="content-section">
-      <div class="placeholder-box">
-        <h3>Pets Content Area</h3>
-        <p>
-          This page shell is ready. The Pets module owner will add the
-          table/cards, forms, and CRUD logic here.
-        </p>
+       <div class="card-container">
+
+  <div class="card1">
+    <div class = "card-image">
+    <img src="https://cdn-icons-png.flaticon.com/512/616/616554.png" alt="dog" style="width:120px;">
+    </div>
+    <div class="card-body1">
+      <h4><b>Dog </b>  <span class="status pending">Pending</span> </h4>
+      <p>Max is a friendly and loyal Golden Retriever looking for a loving home.</p> <br>
+      <p> <i class="fa-regular fa-calendar"></i> 2 years Male</p>
+      <p> <i class="fa-solid fa-location-dot"></i> New York, NY</p>
+      <button class = "button" > <i class="fa-regular fa-pen-to-square"> </i> Edit</button>
+      <button class="button"> <i class="fa-regular fa-heart"></i> Adopt</button>
+    </div>
+  </div>
+
+  <div class="card2">
+    <div class="card-image">
+    <img src="https://cdn-icons-png.flaticon.com/512/6988/6988878.png" alt="cat" style="width:120px;">
+    </div>
+    <div class="card-body2">
+      <h4><b>Cat</b>  <span class="status adopted">Adopted</span></h4> 
+      <p>Luna is a playful and affectionate cat looking for a loving home.</p> <br>
+       <p> <i class="fa-regular fa-calendar"></i> 1 years Female</p>
+      <p> <i class="fa-solid fa-location-dot"></i> Los Angeles, CA</p>
+      <button class="button"> <i class="fa-regular fa-pen-to-square"></i> Edit</button>
+      <button class="button"> <i class="fa-regular fa-heart"></i></i> Adopt</button>
+    </div>
+  </div>
+
+  <div class="card3">
+    <div class="card-image">
+    <img src="https://cdn-icons-png.flaticon.com/512/9308/9308872.png" alt="rabbit" style="width:120px;">
+    </div>
+    <div class="card-body3">
+      <h4><b>Rabbit</b><span class="status available">Available</span></h4> 
+      <p>Snow is a gentle and curious rabbit looking for a loving home.</p> <br>
+        <p> <i class="fa-regular fa-calendar"></i> 3 years Female</p>
+      <p> <i class="fa-solid fa-location-dot"></i> Columbus, OH</p>
+      <button class="button"> <i class="fa-regular fa-pen-to-square"></i> Edit</button>
+      <button class="button"> <i class="fa-regular fa-heart"></i> Adopt</button>
+    </div>
+
+  </div>
+</div>
+        </div>
       </div>
     </section>
   </main>
@@ -52,3 +131,4 @@
   <script src="../js/shared.js"></script>
 </body>
 </html>
+

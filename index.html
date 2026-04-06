@@ -5,7 +5,214 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pet Adoption Center Management System</title>
   <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+.hero h2 {
+    font-family: "Trebuchet MS", sans-serif;
+    color: black;
+    text-align: left;
+    margin: 20px;
+}
+
+.hero p {
+    font-family: "Trebuchet MS", sans-serif;
+    color: grey;
+    text-align: left;
+    margin: 20px;
+}
+
+.dashboard-card {
+  display: flex;                
+  justify-content: space-between; 
+  align-items: center;            
+  background-color: white;
+  border-radius: 8px;
+  height: 70px;                  
+  width: 200px;
+  padding: 10px 15px;
+  margin: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.card-text {
+  display: flex;
+  flex-direction: column;          
+  justify-content: center;        
+}
+
+.card-text h4 {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 15px;
+  color: grey;
+  margin: 0;
+}
+
+.card-text p {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 25px;
+  color: black;
+  margin: 0;
+}
+
+.logo1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;            
+  font-size: 25px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  background-color: lightblue;
+  color: rgb(111, 172, 193);
+}
+
+.logo2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;            
+  font-size: 25px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  background-color:rgb(251, 189, 199);
+  color:rgb(239, 128, 165);
+}
+
+.logo3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;            
+  font-size: 25px;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  background-color: rgb(157, 244, 171);
+  color: rgb(91, 216, 139);
+}
+
+.card-grid {
+  display: flex;
+  gap: 10px;  
+}
+
+.quick-links h3 {
+    font-family: "Trebuchet MS", sans-serif;
+    color: black;
+    text-align: left;
+    margin: 20px;
+}
+  .quick-links h4, .quick-links p {
+    font-family: "Trebuchet MS", sans-serif;
+    color: white;
+    text-align: left;
+    margin: 10px;
+}
+.quick-links {
+    position: absolute;   
+    display: flex;
+    flex-direction: column;     
+    top: 100px;               
+    right: 20px;              
+    gap: 15px;                
+    width: 300px;            
+}
+
+.quick-links .card-grid {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.button-link {
+    display: flex;         
+    align-items: center;
+    gap: 5px;                
+    background: #ff7a59;
+    color: white;
+    text-decoration: none;   
+    padding: 5px 10px;
+    border-radius: 8px;
+    margin: 0;
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.button-link a, h4 {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.message {
+    background-color: #ff7a59;
+    border-radius: 8px;
+    padding: 15px;
+    color: white;
+    font-family: "Trebuchet MS", sans-serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.message h3, .message p {
+    color: white;
+    margin: 5px 0;
+}
+
+.info-menu {
+    display:flex;
+    flex-direction: column;
+    height: auto;
+    width: 300px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+table {
+  width: 100%;
+  text-align: left;
+}
+
+table th, table td {
+  font-family: "Trebuchet MS", sans-serif;
+  color:black;
+}
+
+.info-header h3 {
+  font-family: "Trebuchet MS", sans-serif;
+  color: black;
+}
+
+.status {
+  padding: 4px 10px;  
+  border-radius: 12px; 
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status.available {
+  background-color: #c8f7c5; 
+  color: #2ecc71;
+}
+.status.pending {
+  background-color: #f7dc8b; 
+  color: rgb(211, 171, 24);
+}
+.status.adopted {
+  background-color: #ff7171; 
+  color: #c92e2e;
+}
+
+</style>
+
+
 </head>
+
+
 <body>
   <header class="topbar">
     <div class="logo">
@@ -23,52 +230,116 @@
 
   <main class="container">
     <section class="hero">
-      <h2>Pet Adoption Center Management System</h2>
-      <p>
-        A front-end CRUD web application for managing pets, adopters,
-        and adoption applications using HTML, CSS, JavaScript, and localStorage.
-      </p>
+      <h2>Dashboard</h2>
+      <p> Welcome to Paws and Hearts adoption center </p>
+      </section>
+
+     <section class="quick-links">
+
+      <div class="card-grid">
+         <h3>Quick Access</h3>
+        <a class="button-link quick-card" href="pages/pets.html">
+        <i class="fa-solid fa-plus"></i>
+        <h4>Manage Pets</h4>
+        </a>
+
+        <a class="button-link quick-card" href="pages/adopters.html">
+        <i class="fa-solid fa-paw"></i>
+        <h4>Manage Adopters</h4>
+        </a>
+
+        <a class="button-link quick-card" href="pages/applications.html">
+        <i class="fa-solid fa-file-alt"></i>
+        <h4>Manage Applications</h4>
+        </a>
+      </div>
+
+      <div class = "message">
+        <h3> Make a difference </h3> <br>
+        <p> Every pet deserves a loving home. Help us find a perfect match!</p> <br>
+        <p>  <i class="fa-regular fa-heart"></i> Thank you for caring!</p>
+      </div>
+
     </section>
 
+
     <section class="dashboard-section">
-      <h3>Dashboard Overview</h3>
+
       <div class="card-grid">
+
         <div class="dashboard-card">
+          <div class = "logo1">
+          <i class="fa-solid fa-dog"></i>
+          </div>
+          <div class = "card-text"> 
           <h4>Total Pets</h4>
           <p class="card-value">0</p>
+          </div>
         </div>
-
+        
+       
         <div class="dashboard-card">
+          <div class = "logo2">
+          <i class="fa-solid fa-hand-holding-heart"></i>
+          </div>
+          <div class = "card-text"> 
           <h4>Total Adopters</h4>
           <p class="card-value">0</p>
+          </div>
         </div>
 
         <div class="dashboard-card">
+          <div class = "logo3">
+          <i class="fa-solid fa-clipboard-user"></i>
+          </div>
+          <div class = "card-text">
           <h4>Total Applications</h4>
           <p class="card-value">0</p>
         </div>
-      </div>
-    </section>
+       </div>     
+      </section>
 
-    <section class="quick-links">
-      <h3>Quick Access</h3>
-      <div class="card-grid">
-        <a class="quick-card" href="pages/pets.html">
-          <h4>Manage Pets</h4>
-          <p>View, add, edit, and remove pet records.</p>
-        </a>
+      <section class="pets_info-section">
+      <div class="info-menu">
+  <div class="info-header">
+    <h3>Recent Pets</h3>
+  </div>
 
-        <a class="quick-card" href="pages/adopters.html">
-          <h4>Manage Adopters</h4>
-          <p>Store and maintain adopter information.</p>
-        </a>
+ <table border="0" cellpadding="10">
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Age</th>
+    <th>Status</th>
+  </tr>
 
-        <a class="quick-card" href="pages/applications.html">
-          <h4>Manage Applications</h4>
-          <p>Track adoption applications and their status.</p>
-        </a>
-      </div>
-    </section>
+  <tr>
+    <td>Max</td>
+    <td>Dog</td>
+    <td>2</td>
+    <td><span class="status pending">Pending</span></td>
+
+  </tr>
+
+  <tr>
+    <td>Luna</td>
+    <td>Cat</td>
+    <td>1</td>
+    <td><span class="status adopted">Adopted</span></td>
+
+  </tr>
+
+  <tr>
+    <td>Snow</td>
+    <td>Rabbit</td>
+    <td>3</td>
+    <td><span class="status available">Available</span></td>
+  </tr>
+</table>
+</div>
+</section>
+
+    
   </main>
 
   <footer class="footer">

@@ -1,0 +1,94 @@
+body {
+    background-color: #FFF1D6; 
+     margin: 0;
+    padding-top: 70px;
+}
+
+
+.topbar {
+    position:relative;
+    display: flex;
+    justify-content: space-between; 
+    align-items: left;            
+    background-color: white;      
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1)
+}
+
+
+.topbar .logo h1 {
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 24px;
+    margin: 0;
+}
+
+.navbar .nav-list {
+    display: flex;     
+    list-style: none;  
+    margin: 0;
+    padding: 0;
+}
+
+.navbar .nav-list li {
+    margin-left: 0;   
+    margin-right: 20px;  
+
+}
+
+.navbar .nav-list li a {
+    text-decoration: none;
+    color: #333;
+    font-family: "Trebuchet MS", sans-serif;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.navbar .nav-list li a:hover {
+    background-color: #FFDAB3; 
+}
+
+.navbar .nav-list li a.active {
+    font-weight: bold;
+    color: #FF6F3C;
+}
+
+
+.topbar .logo h1::before {  
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    background-size: contain;
+    background-image: url("https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/heart.svg"); }
+
+
+.nav-list li a::before {
+    content: "";
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    background-size: contain;
+}
+
+.nav-list li:nth-child(1) a::before {  background-image: url("https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/home.svg"); }
+.nav-list li:nth-child(2) a::before {  background-image: url(https://www.svgrepo.com/show/326738/paw-outline.svg); }
+.nav-list li:nth-child(3) a::before {  background-image: url("https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/user.svg"); }
+.nav-list li:nth-child(4) a::before {  background-image: url("https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/document.svg"); }
+
+
+.footer p {
+    font-family: "Trebuchet MS", sans-serif;
+    text-align: left;
+    margin: 20px;
+    color: grey;
+}
+
+
