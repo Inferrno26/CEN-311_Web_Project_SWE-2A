@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Pet | Pet Adoption Center</title>
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="../css/addpet.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <h1>Pet Adoption Center</h1>
+    </div>
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="pets.html" class = "active">Pets</a></li>
+        <li><a href="adopters.html">Adopters</a></li>
+        <li><a href="applications.html">Applications</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="page-header">
+      <div class="header-text">
+        <h2>Add new pet</h2>
+        <p>Fill in the information to add a new pet to the adoption center</p>
+      </div>
+    </section>
+
+
+    <section class="content-section">
+
+      <div class="placeholder-box">
+
+      <div class = "row1">
+        <div class="pet-name">
+        <label for="name">Pet Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter pet name" />
+        </div>
+
+        <div class="pet-age">
+         <label for="age">Age</label>
+        <input type="text" id="age" name="age" placeholder="Enter pet age" />
+        </div>
+      </div>
+
+      <div class = "row2">
+        <div class="pet-weight">
+        <label for="weight">Weight</label>
+        <input type="text" id="weight" name="weight" placeholder="Pet weight (ex: 25 lbs)" />
+        </div>
+
+        <div class="pet-location">
+        <label for="location">Location</label>
+        <input type="text" id="location" name="location" placeholder="City, State" />
+        </div>
+      </div>
+
+      <div class = "row3">
+        <div class="pet-gender">
+        <label for="gender">Gender</label>
+        <select id="gender" name="gender">
+          <option value="">Select gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        </div>
+
+        <div class="pet-type">
+        <label for="type">Type</label>
+        <select id="type" name="type">
+          <option value="">Select type</option>
+          <option value="dog">Dog</option>
+          <option value="cat">Cat</option>
+          <option value="rabbit">Rabbit</option>
+        </select>
+        </div>
+
+         <div class="pet-status">
+        <label for="status">Status</label>
+        <select id="status" name="status">
+          <option value="">Select status</option>
+          <option value="available">Available</option>
+          <option value="adopted">Adopted</option>
+          <option value="pending">Pending</option>
+        </select>
+        </div>
+      </div>
+
+      <div class = "row4">
+        <div class="pet-desc">
+        <label for ="description">Description</label>
+        <textarea id="description" name="description" placeholder="Description"></textarea>
+        </div>
+        <button class="primary-btn" type="button">Add Pet</button>
+      </div>
+       
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Pet Adoption Center Management System</p>
+  </footer>
+
+  <script src="../js/shared.js"></script>
+</body>
+</html> 

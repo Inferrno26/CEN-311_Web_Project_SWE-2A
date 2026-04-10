@@ -1,0 +1,118 @@
+.header-text h2{
+    font-family: "Trebuchet MS", sans-serif;
+    color: black;
+    text-align: left;
+    margin: 20px;
+}
+
+.header-text p {
+    font-family: "Trebuchet MS", sans-serif;
+    color: grey;
+    text-align: left;
+    margin: 10px;
+}
+.primary-btn { 
+    background-color: #ff7a59;
+    color: white;
+    font-family: "Trebuchet MS", sans-serif;
+    border: none;
+    padding: 15px 10px;
+    margin: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.primary-btn:hover {
+    background-color: #e86446;
+}
+
+.placeholder-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    color: grey;
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    height: 350px; 
+    width: 320px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1)
+}
+.pet-name {
+    display: flex;
+    flex-direction: column;
+}
+.pet-name input {
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}
+.pet-age {
+    display: flex;
+    flex-direction: column;
+}
+.pet-age input {
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}
+
+.pet-weight {
+    display: flex;
+    flex-direction: column;
+}
+.pet-weight input {
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}
+.pet-location {
+    display: flex;
+    flex-direction: column;
+}
+.pet-location input {
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}  
+.pet-gender {
+    display: flex;
+    flex-direction: column;
+}
+.pet-gender select {
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}
+.pet-type {
+    display: flex;
+    flex-direction: column;
+}
+.pet-type select {
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}
+.pet-status {
+    display: flex;
+    flex-direction: column;
+}
+.pet-status select {
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+}
+.pet-desc {
+    display: flex;
+    flex-direction: column;
+}
+.pet-desc textarea {
+    font-family: "Trebuchet MS", sans-serif;
+    border-radius: 8px;
+    resize: vertical;
+}
+
+.row1, .row2, .row3, .row4 {
+    display: flex;
+    gap: 20px;
+    margin: 20px;
+}
+
