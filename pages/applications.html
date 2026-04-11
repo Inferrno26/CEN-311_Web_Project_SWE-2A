@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Applications | Pet Adoption Center</title>
   <link rel="stylesheet" href="../css/global.css" />
-  <link rel="stylesheet" href="../css/applications.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
   <header class="topbar">
@@ -26,130 +24,25 @@
   <main class="container">
     <section class="page-header">
       <div>
-        <h2>Adoption requests</h2>
-        <p>Manage and review adoption applications </p>
+        <h2>Applications</h2>
+        <p>Manage adoption application records.</p>
       </div>
       <button class="primary-btn" type="button">Add Application</button>
     </section>
 
-    <div class = top-menu> 
-
-     <div class="filters">
-    
-      <div class="filter-type">
-     <label id = "type-label" for="type">Filter by Type </label>
-     <select id="type">
-        <option>All</option>
-        <option>Dog</option>
-        <option>Cat</option>
-        <option>Rabbit</option>
-     </select>
-      </div>
-
-     <div class="filter-status">
-     <label id="status-label" for="status">Filter by Status</label>
-      <select id="status">
-        <option>All</option>
-        <option>Approved</option>
-        <option>Pending</option>
-        <option>Under Review</option>
-        <option>Rejected</option>
-     </select>
-     </div>
-
-     </div>
-
     <section class="toolbar">
-      <label id = "search-label" for="search"> Search </label>
-      <input type="text" placeholder="Search pets..." class="search-input" />   
+      <input type="text" placeholder="Search applications..." class="search-input" />
     </section>
-
-  </div> 
-
 
     <section class="content-section">
-      
-      <div class="table-info">
-        <table border="0" cellpadding="10">
-  <tr>
-    <th>ID</th>
-    <th>Applicant Name</th>
-    <th>Contact</th>
-    <th>Pet</th>
-    <th>Date Submitted</th>
-    <th>Status</th>
-  </tr>
-
-  <tr>
-    <td>#1</td>
-    <td>Sarah Johnson</td>
-    <td>sarah.j@email.com <br> (555) 123-4567</td>
-    <td>Max <br> Dog</td>
-    <td>3/20/2026</td>
-    <td><span class="status pending">Pending</span></td>
-  </tr>
-
-  <tr>
-    <td>#2</td>
-    <td>Michael Chen</td>
-    <td>m.chen@email.com <br> (555) 987-6543</td>
-    <td>Luna <br> Cat</td>
-    <td>3/19/2026</td>
-    <td><span class="status approved">Approved</span></td>
-
-  </tr>
-
-  <tr>
-    <td>#3</td>
-    <td>Emily Rodriguez</td>
-    <td>emily.r@email.com <br> (555) 456-7890</td>
-    <td>Snow <br> Rabbit</td>
-    <td>3/18/2026</td>
-    <td><span class="status rejected">Rejected</span></td>
-  </tr>
-</table>
+      <div class="placeholder-box">
+        <h3>Applications Content Area</h3>
+        <p>
+          This page shell is ready. The Applications module owner will add the
+          list/table, forms, and CRUD logic here.
+        </p>
       </div>
     </section>
-
-    <div class="card-grid">
-
-        <div class="dashboard-card">
-          <div class = "logo1">
-          <i class="fa-solid fa-check"></i>
-          </div>
-          <div class = "card-text"> 
-          <h4>Approved</h4>
-          <p class="card-value">0</p>
-          </div>
-        </div>
-        
-       
-        <div class="dashboard-card">
-          <div class = "logo2">
-          <i class="fa-regular fa-clock"></i>
-          </div>
-          <div class = "card-text"> 
-          <h4>Pending</h4>
-          <p class="card-value">0</p>
-          </div>
-        </div>
-
-        <div class="dashboard-card">
-          <div class = "logo3">
-          <i class="fa-solid fa-xmark"></i>
-          </div>
-          <div class = "card-text">
-          <h4>Rejected</h4>
-          <p class="card-value">0</p>
-        </div>
-       </div>     
-      </section>
-
-      <section class="pets_info-section">
-      <div class="info-menu">
-  <div class="info-header">
-
-
   </main>
 
   <footer class="footer">

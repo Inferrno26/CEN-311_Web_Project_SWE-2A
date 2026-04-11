@@ -79,7 +79,7 @@ body {
 }
 
 .nav-list li:nth-child(1) a::before {  background-image: url("https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/home.svg"); }
-.nav-list li:nth-child(2) a::before {  background-image: url("https://www.svgrepo.com/show/326738/paw-outline.svg"); }
+.nav-list li:nth-child(2) a::before {  background-image: url(https://www.svgrepo.com/show/326738/paw-outline.svg); }
 .nav-list li:nth-child(3) a::before {  background-image: url("https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/user.svg"); }
 .nav-list li:nth-child(4) a::before {  background-image: url("https://cdn.jsdelivr.net/npm/heroicons@2.0.13/24/outline/document.svg"); }
 
