@@ -34,6 +34,7 @@ All data is stored locally in the browser using **localStorage**, making the app
 
 ## Project Structure
 
+'''text
 pet-adoption-center/
 ├── index.html
 ├── pages/
