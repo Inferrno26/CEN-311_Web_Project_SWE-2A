@@ -34,21 +34,21 @@ All data is stored locally in the browser using **localStorage**, making the app
 
 ## Project Structure
 
-'''text
+
 pet-adoption-center/
-├── index.html
-├── pages/
-│   ├── pets.html
-│   ├── adopters.html
-│   └── applications.html
-├── css/
-│   ├── global.css
-│   ├── pets.css
-│   ├── adopters.css
-│   └── applications.css
-├── js/
-│   ├── shared.js
-│   ├── pets.js
-│   ├── adopters.js
-│   └── applications.js
-└── assets/
+├── index.html 
+├── pages/ 
+│   ├── pets.html 
+│   ├── adopters.html 
+│   └── applications.html 
+├── css/ 
+│   ├── global.css 
+│   ├── pets.css 
+│   ├── adopters.css 
+│   └── applications.css 
+├── js/ 
+│   ├── shared.js 
+│   ├── pets.js 
+│   ├── adopters.js 
+│   └── applications.js 
+└── assets/ 
