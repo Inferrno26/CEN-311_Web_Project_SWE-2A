@@ -1,39 +1,78 @@
+/* ============================================================
+   applications.css  –  Pet Adoption Center | Applications Module
+   Companion to global.css  (Trebuchet MS · #ff7a59 accent)
+   ============================================================ */
+
+/* ── Page header ── */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
 .page-header h2 {
-    font-family: "Trebuchet MS", sans-serif;
-    color:black;
-    text-align: left;
-    margin: 20px;
+  font-family: "Trebuchet MS", sans-serif;
+  color: black;
+  margin: 0 0 4px 0;
 }
+
 .page-header p {
-    font-family: "Trebuchet MS", sans-serif;
-    color: grey;
-    text-align: left;
-    margin: 20px;
+  font-family: "Trebuchet MS", sans-serif;
+  color: grey;
+  margin: 0;
+}
+
+/* ── Primary button ── */
+.primary-btn {
+  background-color: #ff7a59;
+  color: white;
+  font-family: "Trebuchet MS", sans-serif;
+  border: none;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.primary-btn:hover {
+  background-color: #e86446;
+}
+
+/* ── Stat cards ── */
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .dashboard-card {
-  display: flex;                
-  justify-content: space-between; 
-  align-items: center;            
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: white;
   border-radius: 8px;
-  height: 70px;                  
-  width: 200px;
+  height: 70px;
+  width: 180px;
   padding: 10px 15px;
-  margin: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-text {
   display: flex;
-  flex-direction: column;          
-  justify-content: center;        
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card-text h4 {
   font-family: "Trebuchet MS", sans-serif;
-  font-size: 15px;
+  font-size: 13px;
   color: grey;
   margin: 0;
 }
@@ -43,166 +82,402 @@
   font-size: 25px;
   color: black;
   margin: 0;
+  font-weight: 600;
+}
+
+/* Icon circles */
+.logo1, .logo2, .logo3, .logo-green {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  flex-shrink: 0;
 }
 
 .logo1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;            
-  font-size: 25px;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-  background-color: #c8f7c5; ;
-  color: #2ecc71;
+  background-color: #dbeafe;
+  color: #3b82f6;
 }
 
 .logo2 {
-  display: flex;
-  justify-content: center;
-  align-items: center;            
-  font-size: 25px;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-  background-color:#f7dc8b;
-  color:rgb(211, 171, 24);
+  background-color: #f7dc8b;
+  color: rgb(211, 171, 24);
+}
+
+.logo-green {
+  background-color: #c8f7c5;
+  color: #2ecc71;
 }
 
 .logo3 {
-  display: flex;
-  justify-content: center;
-  align-items: center;            
-  font-size: 25px;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
   background-color: #ff7171;
   color: #c92e2e;
 }
 
-.card-grid {
-  display: flex;
-  gap: 10px;  
-}
-
-
-.top-menu {
-    display: flex;
-    justify-content: space-between;
-    justify-content: flex-start;   
-    align-items: center;      
-    background-color: white;
-    color:grey;
-    border-radius: 8px;
-    width: 550px;
-    margin: 20px;
-    padding: 20px;
-    gap: 50px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1)            
-}
-
-.filters {
-    display: flex;
-    gap: 40px;
-}
-
-.filter-type, .filter-status {
-    display: flex;
-    flex-direction: column;
-}
-
-#type-label, #status-label {
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 15px;
-}
-
-#type, #status {
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 15px;
-    border-radius: 8px;
-    margin: 0;
-    cursor: pointer;
-}
-
+/* ── Toolbar ── */
 .toolbar {
-     font-family: "Trebuchet MS", sans-serif;
-    display: flex;
-    flex-direction: column;    
+  margin-bottom: 16px;
 }
 
-.toolbar label {
-    font-size: 15px;
-    margin-bottom: 5px;
+.toolbar-inner {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.search-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  color: #aaa;
+  font-size: 14px;
 }
 
 .search-input {
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-family: "Trebuchet MS", sans-serif;
-    color: grey;
-    width: 200px;
-    font-size: 15px;
-}
-
-.table-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: white;
-    height: auto;
-    width: 600px;
-    margin: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    border-collapse: collapse;
-}
-
-table th, table td {
+  padding: 8px 10px 8px 32px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
   font-family: "Trebuchet MS", sans-serif;
-  color:black;
+  color: #555;
+  width: 240px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
 }
 
-.primary-btn {
-    position: absolute;     
-    top: 55px;               
-    right: 20px;
-    background-color: #ff7a59;
-    color: white;
-    font-family: "Trebuchet MS", sans-serif;
-    border: none;
-    padding: 10px 18px;
-    margin: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+.search-input:focus {
+  border-color: #ff7a59;
 }
 
-.primary-btn:hover {
-    background-color: #e86446;
+.filter-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.status {
-  margin-left: 20px; 
-  float: right; 
-  padding: 4px 10px;  
-  border-radius: 12px; 
+.filter-wrap label {
+  font-family: "Trebuchet MS", sans-serif;
   font-size: 13px;
+  color: grey;
+}
+
+.filter-select {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 7px 10px;
+  cursor: pointer;
+  outline: none;
+  color: #555;
+  transition: border-color 0.2s;
+}
+
+.filter-select:focus {
+  border-color: #ff7a59;
+}
+
+/* ── Table wrapper ── */
+.content-section {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+#applicationsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#applicationsTable thead {
+  background-color: #f9fafb;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+#applicationsTable th {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 13px;
+  color: grey;
+  text-align: left;
+  padding: 14px 16px;
+  white-space: nowrap;
   font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+#applicationsTable td {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 14px;
+  color: #333;
+  padding: 14px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  vertical-align: middle;
+}
+
+#applicationsTable tbody tr:last-child td {
+  border-bottom: none;
+}
+
+#applicationsTable tbody tr:hover {
+  background-color: #fafafa;
+}
+
+/* ── Status badges ── */
+.status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: "Trebuchet MS", sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .status.approved {
-  background-color: #c8f7c5; 
+  background-color: #c8f7c5;
   color: #2ecc71;
 }
+
 .status.pending {
-  background-color: #f7dc8b; 
+  background-color: #f7dc8b;
   color: rgb(211, 171, 24);
 }
+
 .status.rejected {
-  background-color: #ff7171; 
+  background-color: #ff7171;
   color: #c92e2e;
+}
+
+/* ── Action buttons ── */
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 14px;
+  transition: background-color 0.15s ease;
+}
+
+.action-btn.edit {
+  color: #3b82f6;
+}
+
+.action-btn.edit:hover {
+  background-color: #dbeafe;
+}
+
+.action-btn.delete {
+  color: #ef4444;
+}
+
+.action-btn.delete:hover {
+  background-color: #fee2e2;
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: #aaa;
+}
+
+.empty-state i {
+  font-size: 40px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.empty-state p {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 15px;
+}
+
+/* ── Modal overlay ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  animation: slideIn 0.2s ease;
+}
+
+.modal-sm {
+  max-width: 380px;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(-20px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.modal-header h3 {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 17px;
+  color: #222;
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #aaa;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background-color 0.15s;
+}
+
+.modal-close:hover {
+  background-color: #f0f0f0;
+  color: #555;
+}
+
+.modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Form elements ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-group label {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 13px;
+  color: #555;
+  font-weight: 600;
+}
+
+.required {
+  color: #ef4444;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 14px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.2s;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #ff7a59;
+}
+
+.form-error {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 13px;
+  color: #c92e2e;
+  background-color: #fee2e2;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid #f0f0f0;
+  background-color: #fafafa;
+}
+
+/* ── Secondary / cancel button ── */
+.cancel-btn {
+  font-family: "Trebuchet MS", sans-serif;
+  background: white;
+  color: #555;
+  border: 1px solid #ddd;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.cancel-btn:hover {
+  background-color: #f5f5f5;
+}
+
+/* ── Delete confirm button ── */
+.delete-confirm-btn {
+  font-family: "Trebuchet MS", sans-serif;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-confirm-btn:hover {
+  background-color: #dc2626;
+}
+
+/* ── Confirm text ── */
+.confirm-text {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Utility ── */
+.hidden {
+  display: none !important;
 }
