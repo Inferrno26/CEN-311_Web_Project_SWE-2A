@@ -34,13 +34,14 @@
 
     <section class="content-section">
 
-      <div class="placeholder-box">
+      <form id="addPetForm" class="placeholder-box">
+        <div id="add-pet-message" class="message" style="display: none;"></div>
 
-      <div class = "row1">
-        <div class="pet-name">
-        <label for="name">Pet Name</label>
-        <input type="text" id="name" name="name" placeholder="Enter pet name" />
-        </div>
+        <div class = "row1">
+          <div class="pet-name">
+          <label for="name">Pet Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter pet name" />
+          </div>
 
         <div class="pet-age">
          <label for="age">Age</label>
@@ -96,10 +97,9 @@
         <label for ="description">Description</label>
         <textarea id="description" name="description" placeholder="Description"></textarea>
         </div>
-        <button class="primary-btn" type="button">Add Pet</button>
+        <button class="primary-btn" type="submit">Add Pet</button>
       </div>
-       
-      </div>
+      </form>
     </section>
   </main>
 

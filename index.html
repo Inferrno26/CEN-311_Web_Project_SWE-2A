@@ -243,6 +243,11 @@ table th, table td {
         <h4>Manage Pets</h4>
         </a>
 
+        <a class="button-link quick-card" href="pages/addpet.html">
+        <i class="fa-solid fa-paw"></i>
+        <h4>Add Pet</h4>
+        </a>
+
         <a class="button-link quick-card" href="pages/adopters.html">
         <i class="fa-solid fa-paw"></i>
         <h4>Manage Adopters</h4>
@@ -312,29 +317,11 @@ table th, table td {
     <th>Age</th>
     <th>Status</th>
   </tr>
-
-  <tr>
-    <td>Max</td>
-    <td>Dog</td>
-    <td>2</td>
-    <td><span class="status pending">Pending</span></td>
-
-  </tr>
-
-  <tr>
-    <td>Luna</td>
-    <td>Cat</td>
-    <td>1</td>
-    <td><span class="status adopted">Adopted</span></td>
-
-  </tr>
-
-  <tr>
-    <td>Snow</td>
-    <td>Rabbit</td>
-    <td>3</td>
-    <td><span class="status available">Available</span></td>
-  </tr>
+  <tbody id="recent-pets-body">
+    <tr>
+      <td colspan="4">No pets available yet.</td>
+    </tr>
+  </tbody>
 </table>
 </div>
 </section>

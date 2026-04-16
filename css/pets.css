@@ -93,7 +93,7 @@
     font-size: 15px;
 }
 
-.card1 , .card2, .card3 {
+.card1, .card2, .card3, .card {
     display: flex;
     flex-direction: column;     
     align-items: center;         
@@ -105,7 +105,7 @@
     margin: 10px;
     padding: 10px;
     font-family: "Trebuchet MS", sans-serif;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1)
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .card-image  {
@@ -118,12 +118,25 @@
      align-items: center;           
 }
 
+.card-body {
+    width: 100%;
+    padding: 10px 0;
+}
 
 .card-container {
     display: flex;
-    gap: 20;
-    justify-content: left;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
     padding: 20px;
+}
+
+.empty-state {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    color: grey;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 .status {
