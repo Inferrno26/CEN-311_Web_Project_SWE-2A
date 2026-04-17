@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pets | Pet Adoption Center</title>
+
   <link rel="stylesheet" href="../css/global.css" />
   <link rel="stylesheet" href="../css/pets.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 </head>
 
 <body>
@@ -16,23 +16,21 @@
     <div class="logo">
       <h1>Pet Adoption Center</h1>
     </div>
-   
     <nav class="navbar">
       <ul class="nav-list">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="pets.html" class="active">Pets</a></li>
-        <li><a href="adopters.html">Adopters</a></li>
-        <li><a href="applications.html">Applications</a></li>
+        <li><a href="../index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="pets.html" class="active"><i class="fa-solid fa-paw"></i> Pets</a></li>
+        <li><a href="adopters.html"><i class="fa-solid fa-user"></i> Adopters</a></li>
+        <li><a href="applications.html"><i class="fa-regular fa-file"></i> Applications</a></li>
       </ul>
     </nav>
-
   </header>
 
   <main class="container">
-  
+
     <section class="page-header">
-      <div class = "header-text">
-        <h2>Available pets</h2>
+      <div class="header-text">
+        <h2>Available Pets</h2>
         <p>Find your perfect companion!</p>
       </div>
       <a class="primary-btn" href="addpet.html">Add Pet</a>
@@ -40,9 +38,10 @@
 
     <div class="top-menu">
       <div class="filters">
+
         <div class="filter-type">
-          <label id="type-label" for="type">Filter by Type</label>
-          <select id="type">
+          <label for="filter-type">Filter by Type</label>
+          <select id="filter-type">
             <option>All</option>
             <option>Dog</option>
             <option>Cat</option>
@@ -51,32 +50,29 @@
         </div>
 
         <div class="filter-status">
-          <label id="status-label" for="status">Filter by Status</label>
-          <select id="status">
+          <label for="filter-status">Filter by Status</label>
+          <select id="filter-status">
             <option>All</option>
             <option>Available</option>
             <option>Pending</option>
             <option>Adopted</option>
           </select>
         </div>
+
       </div>
 
-      <section class="toolbar">
-        <label id="search-label" for="search">Search</label>
-        <input type="text" placeholder="Search pets..." class="search-input" />
-      </section>
+      <div class="toolbar">
+        <label for="filter-search">Search</label>
+        <input type="text" id="filter-search" placeholder="Search pets..." class="search-input" />
+      </div>
     </div>
 
     <section class="content-section">
       <div class="card-container"></div>
     </section>
-  </main>
 
-  <footer class="footer">
-    <p>&copy; 2026 Pet Adoption Center Management System</p>
-  </footer>
+  </main>
 
   <script src="../js/shared.js"></script>
 </body>
 </html>
-

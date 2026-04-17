@@ -1,50 +1,52 @@
-let adopters = JSON.parse(localStorage.getItem("adopters")) || [];
+const ADOPTERS_KEY = 'adopters';
+
+let adopters     = [];
 let editingIndex = -1;
 
-const formBox = document.getElementById("formBox");
-const showFormBtn = document.getElementById("showFormBtn");
-const cancelBtn = document.getElementById("cancelBtn");
-const saveBtn = document.getElementById("saveBtn");
-const searchInput = document.getElementById("searchInput");
-const tableBody = document.getElementById("adoptersTableBody");
-const formTitle = document.getElementById("formTitle");
+let formBox;
+let formTitle;
+let tableBody;
+let searchInput;
+let nameInput;
+let phoneInput;
+let emailInput;
+let addressInput;
 
-const nameInput = document.getElementById("name");
-const phoneInput = document.getElementById("phone");
-const emailInput = document.getElementById("email");
-const addressInput = document.getElementById("address");
+function openAddForm() {
+  editingIndex = -1;
+  formTitle.textContent = 'Add New Adopter';
+  clearForm();
+  formBox.classList.add('show');
+}
 
-showFormBtn.addEventListener("click", function () {
-  formBox.classList.add("show");
-  formTitle.textContent = "Add New Adopter";
+function closeForm() {
+  formBox.classList.remove('show');
   clearForm();
   editingIndex = -1;
-});
+}
 
-cancelBtn.addEventListener("click", function () {
-  formBox.classList.remove("show");
-  clearForm();
-  editingIndex = -1;
-});
-
-saveBtn.addEventListener("click", saveAdopter);
-searchInput.addEventListener("input", renderAdopters);
+function clearForm() {
+  nameInput.value    = '';
+  phoneInput.value   = '';
+  emailInput.value   = '';
+  addressInput.value = '';
+}
 
 function saveAdopter() {
-  const name = nameInput.value.trim();
-  const phone = phoneInput.value.trim();
-  const email = emailInput.value.trim();
+  const name    = nameInput.value.trim();
+  const phone   = phoneInput.value.trim();
+  const email   = emailInput.value.trim();
   const address = addressInput.value.trim();
 
-  if (name === "" || phone === "" || email === "" || address === "") {
-    alert("Please fill in all fields.");
+  if (!name || !phone || !email || !address) {
+    alert('Please fill in all fields.');
     return;
   }
 
   const adopter = {
-    name: name,
-    phone: phone,
-    email: email,
+    name:    name,
+    phone:   phone,
+    email:   email,
     address: address
   };
 
@@ -54,90 +56,86 @@ function saveAdopter() {
     adopters[editingIndex] = adopter;
   }
 
-  localStorage.setItem("adopters", JSON.stringify(adopters));
+  localStorage.setItem(ADOPTERS_KEY, JSON.stringify(adopters));
+  closeForm();
   renderAdopters();
-  clearForm();
-  formBox.classList.remove("show");
-  editingIndex = -1;
-}
-
-function renderAdopters() {
-  const searchValue = searchInput.value.toLowerCase().trim();
-
-  const filteredAdopters = adopters.filter(function (adopter) {
-    return (
-      adopter.name.toLowerCase().includes(searchValue) ||
-      adopter.phone.toLowerCase().includes(searchValue) ||
-      adopter.email.toLowerCase().includes(searchValue) ||
-      adopter.address.toLowerCase().includes(searchValue)
-    );
-  });
-
-  tableBody.innerHTML = "";
-
-  if (filteredAdopters.length === 0) {
-    tableBody.innerHTML = `
-      <tr>
-        <td colspan="5" class="empty-row">No adopters found.</td>
-      </tr>
-    `;
-    return;
-  }
-
-  filteredAdopters.forEach(function (adopter) {
-    const realIndex = adopters.findIndex(function (a) {
-      return (
-        a.name === adopter.name &&
-        a.phone === adopter.phone &&
-        a.email === adopter.email &&
-        a.address === adopter.address
-      );
-    });
-
-    tableBody.innerHTML += `
-      <tr>
-        <td>${adopter.name}</td>
-        <td>${adopter.phone}</td>
-        <td>${adopter.email}</td>
-        <td>${adopter.address}</td>
-        <td>
-          <button class="action-btn edit-btn" onclick="editAdopter(${realIndex})">Edit</button>
-          <button class="action-btn delete-btn" onclick="deleteAdopter(${realIndex})">Delete</button>
-        </td>
-      </tr>
-    `;
-  });
 }
 
 function editAdopter(index) {
   const adopter = adopters[index];
 
-  nameInput.value = adopter.name;
-  phoneInput.value = adopter.phone;
-  emailInput.value = adopter.email;
+  nameInput.value    = adopter.name;
+  phoneInput.value   = adopter.phone;
+  emailInput.value   = adopter.email;
   addressInput.value = adopter.address;
 
-  editingIndex = index;
-  formTitle.textContent = "Edit Adopter";
-  formBox.classList.add("show");
+  editingIndex          = index;
+  formTitle.textContent = 'Edit Adopter';
+  formBox.classList.add('show');
 }
 
 function deleteAdopter(index) {
-  const confirmDelete = confirm("Are you sure you want to delete this adopter?");
-  if (!confirmDelete) {
+  if (!confirm('Are you sure you want to delete this adopter?')) {
     return;
   }
 
   adopters.splice(index, 1);
-  localStorage.setItem("adopters", JSON.stringify(adopters));
+  localStorage.setItem(ADOPTERS_KEY, JSON.stringify(adopters));
   renderAdopters();
 }
 
-function clearForm() {
-  nameInput.value = "";
-  phoneInput.value = "";
-  emailInput.value = "";
-  addressInput.value = "";
+function renderAdopters() {
+  const query = searchInput.value.toLowerCase().trim();
+
+  tableBody.innerHTML = '';
+
+  let matchCount = 0;
+
+  for (let i = 0; i < adopters.length; i++) {
+    const adopter = adopters[i];
+
+    const nameMatch    = adopter.name.toLowerCase().includes(query);
+    const phoneMatch   = adopter.phone.toLowerCase().includes(query);
+    const emailMatch   = adopter.email.toLowerCase().includes(query);
+    const addressMatch = adopter.address.toLowerCase().includes(query);
+
+    if (nameMatch || phoneMatch || emailMatch || addressMatch) {
+      const row = document.createElement('tr');
+      row.innerHTML =
+        '<td>' + adopter.name    + '</td>' +
+        '<td>' + adopter.phone   + '</td>' +
+        '<td>' + adopter.email   + '</td>' +
+        '<td>' + adopter.address + '</td>' +
+        '<td>' +
+          '<button class="action-btn edit-btn"   onclick="editAdopter('   + i + ')">Edit</button>'   +
+          '<button class="action-btn delete-btn" onclick="deleteAdopter(' + i + ')">Delete</button>' +
+        '</td>';
+      tableBody.appendChild(row);
+      matchCount++;
+    }
+  }
+
+  if (matchCount === 0) {
+    tableBody.innerHTML = '<tr><td colspan="5" class="empty-row">No adopters found.</td></tr>';
+  }
 }
 
-renderAdopters();
+document.addEventListener('DOMContentLoaded', function() {
+  adopters    = JSON.parse(localStorage.getItem(ADOPTERS_KEY)) || [];
+
+  formBox      = document.getElementById('formBox');
+  formTitle    = document.getElementById('formTitle');
+  tableBody    = document.getElementById('adoptersTableBody');
+  searchInput  = document.getElementById('searchInput');
+  nameInput    = document.getElementById('name');
+  phoneInput   = document.getElementById('phone');
+  emailInput   = document.getElementById('email');
+  addressInput = document.getElementById('address');
+
+  document.getElementById('showFormBtn').addEventListener('click', openAddForm);
+  document.getElementById('cancelBtn').addEventListener('click', closeForm);
+  document.getElementById('saveBtn').addEventListener('click', saveAdopter);
+  searchInput.addEventListener('input', renderAdopters);
+
+  renderAdopters();
+});

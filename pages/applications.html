@@ -10,25 +10,25 @@
 </head>
 <body>
 
-  <!--  HEADER  -->
+  
   <header class="topbar">
     <div class="logo">
       <h1>Pet Adoption Center</h1>
     </div>
     <nav class="navbar">
       <ul class="nav-list">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="pets.html">Pets</a></li>
-        <li><a href="adopters.html">Adopters</a></li>
-        <li><a href="applications.html" class="active">Applications</a></li>
+        <li><a href="../index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="pets.html"><i class="fa-solid fa-paw"></i> Pets</a></li>
+        <li><a href="adopters.html"><i class="fa-solid fa-user"></i> Adopters</a></li>
+        <li><a href="applications.html" class="active"><i class="fa-regular fa-file"></i> Applications</a></li>
       </ul>
     </nav>
   </header>
 
-  <!--  MAIN  -->
+  
   <main class="container">
 
-    <!-- Page title -->
+    
     <section class="page-header">
       <div>
         <h2>Applications</h2>
@@ -39,7 +39,7 @@
       </button>
     </section>
 
-    <!-- Stat cards -->
+    
     <section class="card-grid stats-grid">
       <div class="dashboard-card">
         <div class="logo1"><i class="fa-solid fa-file-alt"></i></div>
@@ -71,7 +71,7 @@
       </div>
     </section>
 
-    <!-- Search & filter toolbar -->
+    
     <section class="toolbar">
       <div class="toolbar-inner">
         <div class="search-wrap">
@@ -95,7 +95,7 @@
       </div>
     </section>
 
-    <!-- Applications table -->
+    
     <section class="content-section">
       <div class="table-wrapper">
         <table id="applicationsTable">
@@ -110,7 +110,7 @@
             </tr>
           </thead>
           <tbody id="applicationsBody">
-            <!-- Rows injected by JS -->
+            
           </tbody>
         </table>
         <div id="emptyState" class="empty-state hidden">
@@ -122,12 +122,9 @@
 
   </main>
 
-  <!--  FOOTER  -->
-  <footer class="footer">
-    <p>&copy; 2026 Pet Adoption Center Management System</p>
-  </footer>
+  
 
-  <!--  MODAL: Add / Edit Application  -->
+  
   <div id="modalOverlay" class="modal-overlay hidden">
     <div class="modal">
       <div class="modal-header">
@@ -177,7 +174,7 @@
     </div>
   </div>
 
-  <!--  MODAL: Confirm Delete  -->
+  
   <div id="deleteOverlay" class="modal-overlay hidden">
     <div class="modal modal-sm">
       <div class="modal-header">
@@ -196,6 +193,6 @@
     </div>
   </div>
   
-  <script src="../pages/applications.js"></script>
+  <script src="applications.js"></script>
 </body>
 </html>

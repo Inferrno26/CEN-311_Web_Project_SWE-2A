@@ -1,66 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Adopters - Pet Adoption Center</title>
+  <title>Adopters | Pet Adoption Center</title>
+
+  <link rel="stylesheet" href="../css/global.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
   <link rel="stylesheet" href="../css/adopters.css" />
 </head>
+
 <body>
-  
-  <nav class="navbar">
-  <div class="logo">♡ Pet Adoption Center</div>
 
-  <ul class="nav-links">
-    <li>
-      <a href="../index.html">
-        <i class="fa-solid fa-house"></i> Home
-      </a>
-    </li>
+  <header class="topbar">
+    <div class="logo">
+      <h1>Pet Adoption Center</h1>
+    </div>
+    <nav class="navbar">
+      <ul class="nav-list">
+        <li><a href="../index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="pets.html"><i class="fa-solid fa-paw"></i> Pets</a></li>
+        <li><a href="adopters.html" class="active"><i class="fa-solid fa-user"></i> Adopters</a></li>
+        <li><a href="applications.html"><i class="fa-regular fa-file"></i> Applications</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <li>
-      <a href="pets.html">
-        <i class="fa-solid fa-paw"></i> Pets
-      </a>
-    </li>
+  <main class="container">
 
-    <li>
-      <a href="adopters.html" class="active">
-        <i class="fa-regular fa-user"></i> Adopters
-      </a>
-    </li>
+    <section class="page-header">
+      <div class="header-text">
+        <h2>Adopters</h2>
+        <p>Manage adopter information and records.</p>
+      </div>
+      <button id="showFormBtn" class="primary-btn">Add Adopter</button>
+    </section>
 
-    <li>
-      <a href="applications.html">
-        <i class="fa-regular fa-file"></i> Applications
-      </a>
-    </li>
-  </ul>
-</nav>
-
-  <main class="page">
-    <h1>Adopters</h1>
-    <p class="subtitle">Manage adopter information and records.</p>
-
-    <div class="top-bar">
-      <button id="showFormBtn">Add Adopter</button>
-      <input type="text" id="searchInput" placeholder="Search adopters..." />
+    <div class="adopters-search-bar">
+      <input type="text" id="searchInput" placeholder="Search adopters..." class="search-input" />
     </div>
 
     <div class="content-card">
-      <h2>Adopters Content Area</h2>
 
       <div class="form-box" id="formBox">
         <h3 id="formTitle">Add New Adopter</h3>
-
         <div class="form-grid">
-          <input type="text" id="name" placeholder="Full Name" />
-          <input type="text" id="phone" placeholder="Phone Number" />
-          <input type="email" id="email" placeholder="Email Address" />
-          <input type="text" id="address" placeholder="Address" />
+          <input type="text"  id="name"    placeholder="Full Name" />
+          <input type="text"  id="phone"   placeholder="Phone Number" />
+          <input type="email" id="email"   placeholder="Email Address" />
+          <input type="text"  id="address" placeholder="Address" />
         </div>
-
         <div class="form-actions">
           <button id="saveBtn">Save</button>
           <button id="cancelBtn" type="button">Cancel</button>
@@ -85,10 +74,11 @@
           </tbody>
         </table>
       </div>
+
     </div>
 
-    <footer class="footer">© 2026 Pet Adoption Center Management System</footer>
   </main>
+
 
   <script src="adopters.js"></script>
 </body>

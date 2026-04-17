@@ -1,172 +1,211 @@
-const STORAGE_KEY = "pac_applications";
-
-/*  Helpers  */
-
-function generateId() {
-  return "APP-" + Date.now().toString(36).toUpperCase();
-}
+const STORAGE_KEY = 'pac_applications';
 
 function getApplications() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch {
-    return [];
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored) {
+    return JSON.parse(stored);
   }
+  return [];
 }
 
 function saveApplications(apps) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(apps));
 }
 
+function generateId() {
+  return 'APP-' + Date.now();
+}
+
 function formatDate(isoDate) {
-  if (!isoDate) return "—";
-  const [y, m, d] = isoDate.split("-");
-  return `${d}/${m}/${y}`;
-}
-
-function statusClass(status) {
-  return status.toLowerCase(); // "approved" | "pending" | "rejected"
-}
-
-/*  Render  */
-
-function renderTable(apps) {
-  const tbody = document.getElementById("applicationsBody");
-  const empty = document.getElementById("emptyState");
-
-  tbody.innerHTML = "";
-
-  if (apps.length === 0) {
-    empty.classList.remove("hidden");
-    return;
+  if (!isoDate) {
+    return '';
   }
-
-  empty.classList.add("hidden");
-
-  apps.forEach((app) => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${app.id}</td>
-      <td>${escapeHtml(app.adopterName)}</td>
-      <td>${escapeHtml(app.petName)}</td>
-      <td>${formatDate(app.dateApplied)}</td>
-      <td><span class="status ${statusClass(app.status)}">${app.status}</span></td>
-      <td>
-        <button class="action-btn edit" title="Edit" data-id="${app.id}">
-          <i class="fa-solid fa-pen"></i>
-        </button>
-        <button class="action-btn delete" title="Delete" data-id="${app.id}">
-          <i class="fa-solid fa-trash"></i>
-        </button>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-
-  // Attach row-level event listeners
-  tbody.querySelectorAll(".action-btn.edit").forEach((btn) => {
-    btn.addEventListener("click", () => openEditModal(btn.dataset.id));
-  });
-
-  tbody.querySelectorAll(".action-btn.delete").forEach((btn) => {
-    btn.addEventListener("click", () => openDeleteConfirm(btn.dataset.id));
-  });
+  const parts = isoDate.split('-');
+  const year  = parts[0];
+  const month = parts[1];
+  const day   = parts[2];
+  return day + '/' + month + '/' + year;
 }
 
-function updateStats(apps) {
-  document.getElementById("stat-total").textContent    = apps.length;
-  document.getElementById("stat-pending").textContent  = apps.filter((a) => a.status === "Pending").length;
-  document.getElementById("stat-approved").textContent = apps.filter((a) => a.status === "Approved").length;
-  document.getElementById("stat-rejected").textContent = apps.filter((a) => a.status === "Rejected").length;
+function todayISO() {
+  const today = new Date();
+  const year  = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day   = String(today.getDate()).padStart(2, '0');
+  return year + '-' + month + '-' + day;
+}
+
+function getStatusClass(status) {
+  return status.toLowerCase();
 }
 
 function refresh() {
-  const apps    = getApplications();
-  const search  = document.getElementById("searchInput").value.trim().toLowerCase();
-  const status  = document.getElementById("statusFilter").value;
+  const all    = getApplications();
+  const search = document.getElementById('searchInput').value.trim().toLowerCase();
+  const status = document.getElementById('statusFilter').value;
 
-  const filtered = apps.filter((a) => {
-    const matchSearch =
-      !search ||
-      a.adopterName.toLowerCase().includes(search) ||
-      a.petName.toLowerCase().includes(search) ||
-      a.id.toLowerCase().includes(search);
+  const filtered = [];
 
-    const matchStatus = status === "all" || a.status === status;
+  for (let i = 0; i < all.length; i++) {
+    const app = all[i];
 
-    return matchSearch && matchStatus;
-  });
+    const nameMatch   = app.adopterName.toLowerCase().includes(search);
+    const petMatch    = app.petName.toLowerCase().includes(search);
+    const idMatch     = String(app.id).toLowerCase().includes(search);
+    const matchSearch = (search === '') || nameMatch || petMatch || idMatch;
+    const matchStatus = (status === 'all') || (app.status === status);
+
+    if (matchSearch && matchStatus) {
+      filtered.push(app);
+    }
+  }
 
   renderTable(filtered);
-  updateStats(apps); // stats always reflect full dataset
+  updateStats(all);
 }
 
-/*  Modal: Add / Edit  */
+function renderTable(apps) {
+  const tbody = document.getElementById('applicationsBody');
+  const empty = document.getElementById('emptyState');
 
-let editingId = null;
+  tbody.innerHTML = '';
+
+  if (apps.length === 0) {
+    empty.classList.remove('hidden');
+    return;
+  }
+
+  empty.classList.add('hidden');
+
+  for (let i = 0; i < apps.length; i++) {
+    const app = apps[i];
+    const tr  = document.createElement('tr');
+
+    tr.innerHTML =
+      '<td>' + app.id + '</td>' +
+      '<td>' + app.adopterName + '</td>' +
+      '<td>' + app.petName + '</td>' +
+      '<td>' + formatDate(app.dateApplied) + '</td>' +
+      '<td><span class="status ' + getStatusClass(app.status) + '">' + app.status + '</span></td>' +
+      '<td>' +
+        '<button class="action-btn edit"   title="Edit"   onclick="openEditModal(\'' + app.id + '\')">' +
+          '<i class="fa-solid fa-pen"></i>' +
+        '</button>' +
+        '<button class="action-btn delete" title="Delete" onclick="openDeleteConfirm(\'' + app.id + '\')">' +
+          '<i class="fa-solid fa-trash"></i>' +
+        '</button>' +
+      '</td>';
+
+    tbody.appendChild(tr);
+  }
+}
+
+function updateStats(apps) {
+  let totalCount    = apps.length;
+  let pendingCount  = 0;
+  let approvedCount = 0;
+  let rejectedCount = 0;
+
+  for (let i = 0; i < apps.length; i++) {
+    if (apps[i].status === 'Pending')  { pendingCount++;  }
+    if (apps[i].status === 'Approved') { approvedCount++; }
+    if (apps[i].status === 'Rejected') { rejectedCount++; }
+  }
+
+  document.getElementById('stat-total').textContent    = totalCount;
+  document.getElementById('stat-pending').textContent  = pendingCount;
+  document.getElementById('stat-approved').textContent = approvedCount;
+  document.getElementById('stat-rejected').textContent = rejectedCount;
+}
+
+let editingId  = null;
+let deletingId = null;
 
 function openAddModal() {
   editingId = null;
-  document.getElementById("modalTitle").textContent = "Add Application";
-  document.getElementById("appId").value           = "";
-  document.getElementById("adopterName").value     = "";
-  document.getElementById("petName").value         = "";
-  document.getElementById("dateApplied").value     = todayISO();
-  document.getElementById("appStatus").value       = "Pending";
-  document.getElementById("notes").value           = "";
-  document.getElementById("formError").classList.add("hidden");
-  document.getElementById("modalOverlay").classList.remove("hidden");
-  document.getElementById("adopterName").focus();
+
+  document.getElementById('modalTitle').textContent = 'Add Application';
+  document.getElementById('appId').value            = '';
+  document.getElementById('adopterName').value      = '';
+  document.getElementById('petName').value          = '';
+  document.getElementById('dateApplied').value      = todayISO();
+  document.getElementById('appStatus').value        = 'Pending';
+  document.getElementById('notes').value            = '';
+  document.getElementById('formError').classList.add('hidden');
+  document.getElementById('modalOverlay').classList.remove('hidden');
+  document.getElementById('adopterName').focus();
 }
 
 function openEditModal(id) {
   const apps = getApplications();
-  const app  = apps.find((a) => a.id === id);
-  if (!app) return;
+  let app = null;
 
-  editingId = id;
-  document.getElementById("modalTitle").textContent = "Edit Application";
-  document.getElementById("appId").value           = app.id;
-  document.getElementById("adopterName").value     = app.adopterName;
-  document.getElementById("petName").value         = app.petName;
-  document.getElementById("dateApplied").value     = app.dateApplied;
-  document.getElementById("appStatus").value       = app.status;
-  document.getElementById("notes").value           = app.notes || "";
-  document.getElementById("formError").classList.add("hidden");
-  document.getElementById("modalOverlay").classList.remove("hidden");
-  document.getElementById("adopterName").focus();
-}
+  for (let i = 0; i < apps.length; i++) {
+    if (apps[i].id === id) {
+      app = apps[i];
+      break;
+    }
+  }
 
-function closeAddModal() {
-  document.getElementById("modalOverlay").classList.add("hidden");
-}
-
-function saveApplication() {
-  const adopterName = document.getElementById("adopterName").value.trim();
-  const petName     = document.getElementById("petName").value.trim();
-  const dateApplied = document.getElementById("dateApplied").value;
-  const status      = document.getElementById("appStatus").value;
-  const notes       = document.getElementById("notes").value.trim();
-
-  // Validation
-  if (!adopterName || !petName || !dateApplied) {
-    document.getElementById("formError").classList.remove("hidden");
+  if (!app) {
     return;
   }
 
-  document.getElementById("formError").classList.add("hidden");
+  editingId = id;
+
+  document.getElementById('modalTitle').textContent = 'Edit Application';
+  document.getElementById('appId').value            = app.id;
+  document.getElementById('adopterName').value      = app.adopterName;
+  document.getElementById('petName').value          = app.petName;
+  document.getElementById('dateApplied').value      = app.dateApplied;
+  document.getElementById('appStatus').value        = app.status;
+  document.getElementById('notes').value            = app.notes || '';
+  document.getElementById('formError').classList.add('hidden');
+  document.getElementById('modalOverlay').classList.remove('hidden');
+  document.getElementById('adopterName').focus();
+}
+
+function closeAddModal() {
+  document.getElementById('modalOverlay').classList.add('hidden');
+}
+
+function saveApplication() {
+  const adopterName = document.getElementById('adopterName').value.trim();
+  const petName     = document.getElementById('petName').value.trim();
+  const dateApplied = document.getElementById('dateApplied').value;
+  const status      = document.getElementById('appStatus').value;
+  const notes       = document.getElementById('notes').value.trim();
+
+  if (!adopterName || !petName || !dateApplied) {
+    document.getElementById('formError').classList.remove('hidden');
+    return;
+  }
+
+  document.getElementById('formError').classList.add('hidden');
 
   const apps = getApplications();
 
   if (editingId) {
-    // Update existing
-    const idx = apps.findIndex((a) => a.id === editingId);
-    if (idx !== -1) {
-      apps[idx] = { ...apps[idx], adopterName, petName, dateApplied, status, notes };
+    for (let i = 0; i < apps.length; i++) {
+      if (apps[i].id === editingId) {
+        apps[i].adopterName = adopterName;
+        apps[i].petName     = petName;
+        apps[i].dateApplied = dateApplied;
+        apps[i].status      = status;
+        apps[i].notes       = notes;
+        break;
+      }
     }
   } else {
-    // Create new
-    apps.unshift({ id: generateId(), adopterName, petName, dateApplied, status, notes });
+    const newApp = {
+      id:           generateId(),
+      adopterName:  adopterName,
+      petName:      petName,
+      dateApplied:  dateApplied,
+      status:       status,
+      notes:        notes
+    };
+    apps.push(newApp);
   }
 
   saveApplications(apps);
@@ -174,80 +213,61 @@ function saveApplication() {
   refresh();
 }
 
-/*  Modal: Delete confirm  */
-
-let deletingId = null;
-
 function openDeleteConfirm(id) {
   deletingId = id;
-  document.getElementById("deleteOverlay").classList.remove("hidden");
+  document.getElementById('deleteOverlay').classList.remove('hidden');
 }
 
 function closeDeleteConfirm() {
   deletingId = null;
-  document.getElementById("deleteOverlay").classList.add("hidden");
+  document.getElementById('deleteOverlay').classList.add('hidden');
 }
 
 function confirmDelete() {
-  if (!deletingId) return;
-  const apps    = getApplications().filter((a) => a.id !== deletingId);
-  saveApplications(apps);
+  if (!deletingId) {
+    return;
+  }
+
+  const apps    = getApplications();
+  const updated = [];
+
+  for (let i = 0; i < apps.length; i++) {
+    if (apps[i].id !== deletingId) {
+      updated.push(apps[i]);
+    }
+  }
+
+  saveApplications(updated);
   closeDeleteConfirm();
   refresh();
 }
 
-/*  Utilities  */
-
-function todayISO() {
-  return new Date().toISOString().split("T")[0];
-}
-
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-/*  Bootstrap  */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  // Initial render
+document.addEventListener('DOMContentLoaded', function() {
   refresh();
 
-  // Search & filter listeners
-  document.getElementById("searchInput").addEventListener("input", refresh);
-  document.getElementById("statusFilter").addEventListener("change", refresh);
+  document.getElementById('searchInput').addEventListener('input', refresh);
+  document.getElementById('statusFilter').addEventListener('change', refresh);
 
-  // Open add modal
-  document.getElementById("openAddModal").addEventListener("click", openAddModal);
+  document.getElementById('openAddModal').addEventListener('click', openAddModal);
 
-  // Close add/edit modal
-  document.getElementById("closeModal").addEventListener("click", closeAddModal);
-  document.getElementById("cancelModal").addEventListener("click", closeAddModal);
+  document.getElementById('closeModal').addEventListener('click', closeAddModal);
+  document.getElementById('cancelModal').addEventListener('click', closeAddModal);
 
-  // Save application
-  document.getElementById("saveApplication").addEventListener("click", saveApplication);
+  document.getElementById('saveApplication').addEventListener('click', saveApplication);
 
-  // Keyboard shortcut: Enter to save when modal is open
-  document.getElementById("modalOverlay").addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && e.target.tagName !== "TEXTAREA") saveApplication();
-    if (e.key === "Escape") closeAddModal();
+  document.getElementById('closeDeleteModal').addEventListener('click', closeDeleteConfirm);
+  document.getElementById('cancelDelete').addEventListener('click', closeDeleteConfirm);
+  document.getElementById('confirmDelete').addEventListener('click', confirmDelete);
+
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === document.getElementById('modalOverlay')) {
+      closeAddModal();
+    }
   });
 
-  // Delete confirm modal
-  document.getElementById("closeDeleteModal").addEventListener("click", closeDeleteConfirm);
-  document.getElementById("cancelDelete").addEventListener("click", closeDeleteConfirm);
-  document.getElementById("confirmDelete").addEventListener("click", confirmDelete);
-
-  // Close modals on overlay click
-  document.getElementById("modalOverlay").addEventListener("click", (e) => {
-    if (e.target === document.getElementById("modalOverlay")) closeAddModal();
-  });
-
-  document.getElementById("deleteOverlay").addEventListener("click", (e) => {
-    if (e.target === document.getElementById("deleteOverlay")) closeDeleteConfirm();
+  document.getElementById('deleteOverlay').addEventListener('click', function(e) {
+    if (e.target === document.getElementById('deleteOverlay')) {
+      closeDeleteConfirm();
+    }
   });
 });
