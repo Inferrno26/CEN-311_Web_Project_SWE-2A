@@ -32,3 +32,12 @@ All data is stored locally in the browser using **localStorage**, making the app
 - **JavaScript (Vanilla JS)**
 - **localStorage**
 
+
+## Team Members
+- Ana Gjergji
+- Alba Gjergji
+- Henri Aliaj
+- Mekin Sijoni
+- Isuf Çelhaka
+- Amanda Shirka
+- Dion Hasanbashaj 
