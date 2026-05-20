@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "6Gz4S7XIWTE=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\German PC\\CEN-311_Web_Project_SWE-2A\\backend\\PawsHeartsApi.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\German PC\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.8\\microsoft.aspnetcore.openapi.10.0.8.nupkg.sha512",
+    "C:\\Users\\German PC\\.nuget\\packages\\microsoft.openapi\\2.0.0\\microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
