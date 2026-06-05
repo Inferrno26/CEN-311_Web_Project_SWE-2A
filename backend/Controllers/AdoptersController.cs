@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PawsHeartsApi.Data;
 using PawsHeartsApi.Models;
 
 namespace PawsHeartsApi.Controllers;
@@ -7,22 +9,24 @@ namespace PawsHeartsApi.Controllers;
 [Route("api/adopters")]
 public class AdoptersController : ControllerBase
 {
-    private static List<Adopter> _adopters = new List<Adopter>
+    private readonly PawsHeartsDbContext _db;
+
+    public AdoptersController(PawsHeartsDbContext db)
     {
-        new Adopter { Id = 1, Name = "Jane Doe",    Phone = "+355 69 123 4567", Email = "jane.doe@email.com",    Address = "Tirana, AL" },
-        new Adopter { Id = 2, Name = "John Smith",  Phone = "+355 69 234 5678", Email = "john.smith@email.com",  Address = "Durres, AL" }
-    };
+        _db = db;
+    }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Adopter>> GetAll()
+    public async Task<ActionResult<IEnumerable<Adopter>>> GetAll()
     {
-        return Ok(_adopters);
+        var adopters = await _db.Adopters.ToListAsync();
+        return Ok(adopters);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Adopter> GetById(int id)
+    public async Task<ActionResult<Adopter>> GetById(int id)
     {
-        var adopter = _adopters.FirstOrDefault(a => a.Id == id);
+        var adopter = await _db.Adopters.FindAsync(id);
         if (adopter == null)
         {
             return NotFound();
@@ -31,17 +35,17 @@ public class AdoptersController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Adopter> Create(Adopter adopter)
+    public async Task<ActionResult<Adopter>> Create(Adopter adopter)
     {
-        adopter.Id = _adopters.Count == 0 ? 1 : _adopters.Max(a => a.Id) + 1;
-        _adopters.Add(adopter);
+        _db.Adopters.Add(adopter);
+        await _db.SaveChangesAsync();
         return CreatedAtAction(nameof(GetById), new { id = adopter.Id }, adopter);
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Adopter> Update(int id, Adopter adopter)
+    public async Task<ActionResult<Adopter>> Update(int id, Adopter adopter)
     {
-        var existing = _adopters.FirstOrDefault(a => a.Id == id);
+        var existing = await _db.Adopters.FindAsync(id);
         if (existing == null)
         {
             return NotFound();
@@ -52,18 +56,21 @@ public class AdoptersController : ControllerBase
         existing.Email   = adopter.Email;
         existing.Address = adopter.Address;
 
+        await _db.SaveChangesAsync();
         return Ok(existing);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var adopter = _adopters.FirstOrDefault(a => a.Id == id);
+        var adopter = await _db.Adopters.FindAsync(id);
         if (adopter == null)
         {
             return NotFound();
         }
-        _adopters.Remove(adopter);
+
+        _db.Adopters.Remove(adopter);
+        await _db.SaveChangesAsync();
         return NoContent();
     }
 }

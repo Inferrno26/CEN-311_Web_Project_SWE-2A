@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PawsHeartsApi.Data;
 using PawsHeartsApi.Models;
 
 namespace PawsHeartsApi.Controllers;
@@ -7,23 +9,24 @@ namespace PawsHeartsApi.Controllers;
 [Route("api/pets")]
 public class PetsController : ControllerBase
 {
-    private static List<Pet> _pets = new List<Pet>
+    private readonly PawsHeartsDbContext _db;
+
+    public PetsController(PawsHeartsDbContext db)
     {
-        new Pet { Id = 1, Name = "Max",     Age = 2, Weight = 11.5m, Location = "Tirana, AL", Gender = "Male",   Type = "Dog", Status = "Available", Description = "Friendly Golden Retriever" },
-        new Pet { Id = 2, Name = "Luna",    Age = 1, Weight = 4.0m,  Location = "Durres, AL", Gender = "Female", Type = "Cat", Status = "Available", Description = "Calm and affectionate" },
-        new Pet { Id = 3, Name = "Charlie", Age = 3, Weight = 12.0m, Location = "Vlore, AL",  Gender = "Male",   Type = "Dog", Status = "Pending",   Description = "Playful Beagle" }
-    };
+        _db = db;
+    }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Pet>> GetAll()
+    public async Task<ActionResult<IEnumerable<Pet>>> GetAll()
     {
-        return Ok(_pets);
+        var pets = await _db.Pets.ToListAsync();
+        return Ok(pets);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Pet> GetById(int id)
+    public async Task<ActionResult<Pet>> GetById(int id)
     {
-        var pet = _pets.FirstOrDefault(p => p.Id == id);
+        var pet = await _db.Pets.FindAsync(id);
         if (pet == null)
         {
             return NotFound();
@@ -32,17 +35,17 @@ public class PetsController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Pet> Create(Pet pet)
+    public async Task<ActionResult<Pet>> Create(Pet pet)
     {
-        pet.Id = _pets.Count == 0 ? 1 : _pets.Max(p => p.Id) + 1;
-        _pets.Add(pet);
+        _db.Pets.Add(pet);
+        await _db.SaveChangesAsync();
         return CreatedAtAction(nameof(GetById), new { id = pet.Id }, pet);
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Pet> Update(int id, Pet pet)
+    public async Task<ActionResult<Pet>> Update(int id, Pet pet)
     {
-        var existing = _pets.FirstOrDefault(p => p.Id == id);
+        var existing = await _db.Pets.FindAsync(id);
         if (existing == null)
         {
             return NotFound();
@@ -57,18 +60,21 @@ public class PetsController : ControllerBase
         existing.Status      = pet.Status;
         existing.Description = pet.Description;
 
+        await _db.SaveChangesAsync();
         return Ok(existing);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-        var pet = _pets.FirstOrDefault(p => p.Id == id);
+        var pet = await _db.Pets.FindAsync(id);
         if (pet == null)
         {
             return NotFound();
         }
-        _pets.Remove(pet);
+
+        _db.Pets.Remove(pet);
+        await _db.SaveChangesAsync();
         return NoContent();
     }
 }

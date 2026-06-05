@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace PawsHeartsApi.Models;
 
 public class Application
 {
+    [Key]
     public string Id { get; set; } = "";
     public string AdopterName { get; set; } = "";
     public string PetName { get; set; } = "";

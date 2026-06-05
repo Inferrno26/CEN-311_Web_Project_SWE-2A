@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PawsHeartsApi.Data;
 using PawsHeartsApi.Models;
 
 namespace PawsHeartsApi.Controllers;
@@ -7,22 +9,24 @@ namespace PawsHeartsApi.Controllers;
 [Route("api/applications")]
 public class ApplicationsController : ControllerBase
 {
-    private static List<Application> _applications = new List<Application>
+    private readonly PawsHeartsDbContext _db;
+
+    public ApplicationsController(PawsHeartsDbContext db)
     {
-        new Application { Id = "APP-1", AdopterName = "Jane Doe",   PetName = "Max",  DateApplied = "2026-05-10", Status = "Pending",  Notes = "" },
-        new Application { Id = "APP-2", AdopterName = "John Smith", PetName = "Luna", DateApplied = "2026-05-12", Status = "Approved", Notes = "Verified references" }
-    };
+        _db = db;
+    }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Application>> GetAll()
+    public async Task<ActionResult<IEnumerable<Application>>> GetAll()
     {
-        return Ok(_applications);
+        var applications = await _db.Applications.ToListAsync();
+        return Ok(applications);
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Application> GetById(string id)
+    public async Task<ActionResult<Application>> GetById(string id)
     {
-        var application = _applications.FirstOrDefault(a => a.Id == id);
+        var application = await _db.Applications.FindAsync(id);
         if (application == null)
         {
             return NotFound();
@@ -31,17 +35,18 @@ public class ApplicationsController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Application> Create(Application application)
+    public async Task<ActionResult<Application>> Create(Application application)
     {
         application.Id = "APP-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        _applications.Add(application);
+        _db.Applications.Add(application);
+        await _db.SaveChangesAsync();
         return CreatedAtAction(nameof(GetById), new { id = application.Id }, application);
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Application> Update(string id, Application application)
+    public async Task<ActionResult<Application>> Update(string id, Application application)
     {
-        var existing = _applications.FirstOrDefault(a => a.Id == id);
+        var existing = await _db.Applications.FindAsync(id);
         if (existing == null)
         {
             return NotFound();
@@ -53,18 +58,21 @@ public class ApplicationsController : ControllerBase
         existing.Status      = application.Status;
         existing.Notes       = application.Notes;
 
+        await _db.SaveChangesAsync();
         return Ok(existing);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(string id)
+    public async Task<IActionResult> Delete(string id)
     {
-        var application = _applications.FirstOrDefault(a => a.Id == id);
+        var application = await _db.Applications.FindAsync(id);
         if (application == null)
         {
             return NotFound();
         }
-        _applications.Remove(application);
+
+        _db.Applications.Remove(application);
+        await _db.SaveChangesAsync();
         return NoContent();
     }
 }

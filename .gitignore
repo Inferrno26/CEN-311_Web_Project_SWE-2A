@@ -23,3 +23,5 @@ obj/
 # Local config overrides
 appsettings.Development.local.json
 appsettings.Local.json
+
+*.db
