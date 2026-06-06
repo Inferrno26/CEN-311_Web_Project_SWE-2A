@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PawsHeartsApi.Data;
+using PawsHeartsApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,10 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<PawsHeartsDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddScoped<PetService>();
+builder.Services.AddScoped<AdopterService>();
+builder.Services.AddScoped<ApplicationService>();
 
 builder.Services.AddCors(options =>
 {

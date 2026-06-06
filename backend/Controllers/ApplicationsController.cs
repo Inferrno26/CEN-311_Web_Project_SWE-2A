@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using PawsHeartsApi.Data;
 using PawsHeartsApi.Models;
+using PawsHeartsApi.Services;
 
 namespace PawsHeartsApi.Controllers;
 
@@ -9,24 +8,24 @@ namespace PawsHeartsApi.Controllers;
 [Route("api/applications")]
 public class ApplicationsController : ControllerBase
 {
-    private readonly PawsHeartsDbContext _db;
+    private readonly ApplicationService _applicationService;
 
-    public ApplicationsController(PawsHeartsDbContext db)
+    public ApplicationsController(ApplicationService applicationService)
     {
-        _db = db;
+        _applicationService = applicationService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Application>>> GetAll()
     {
-        var applications = await _db.Applications.ToListAsync();
+        var applications = await _applicationService.GetAllAsync();
         return Ok(applications);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Application>> GetById(string id)
     {
-        var application = await _db.Applications.FindAsync(id);
+        var application = await _applicationService.GetByIdAsync(id);
         if (application == null)
         {
             return NotFound();
@@ -37,42 +36,29 @@ public class ApplicationsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Application>> Create(Application application)
     {
-        application.Id = "APP-" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        _db.Applications.Add(application);
-        await _db.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetById), new { id = application.Id }, application);
+        var created = await _applicationService.CreateAsync(application);
+        return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult<Application>> Update(string id, Application application)
     {
-        var existing = await _db.Applications.FindAsync(id);
-        if (existing == null)
+        var updated = await _applicationService.UpdateAsync(id, application);
+        if (updated == null)
         {
             return NotFound();
         }
-
-        existing.AdopterName = application.AdopterName;
-        existing.PetName     = application.PetName;
-        existing.DateApplied = application.DateApplied;
-        existing.Status      = application.Status;
-        existing.Notes       = application.Notes;
-
-        await _db.SaveChangesAsync();
-        return Ok(existing);
+        return Ok(updated);
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
-        var application = await _db.Applications.FindAsync(id);
-        if (application == null)
+        var deleted = await _applicationService.DeleteAsync(id);
+        if (!deleted)
         {
             return NotFound();
         }
-
-        _db.Applications.Remove(application);
-        await _db.SaveChangesAsync();
         return NoContent();
     }
 }
