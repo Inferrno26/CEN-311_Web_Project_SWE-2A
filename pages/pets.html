@@ -73,6 +73,77 @@
 
   </main>
 
+  <div id="editPetOverlay" class="pet-modal-overlay">
+    <div class="pet-modal">
+      <div class="pet-modal-header">
+        <h3>Edit Pet</h3>
+        <button class="pet-modal-close" onclick="closeEditModal()">&times;</button>
+      </div>
+      <div class="pet-modal-body">
+        <input type="hidden" id="edit-pet-id" />
+
+        <div class="pet-form-row">
+          <div class="pet-form-field">
+            <label for="edit-name">Pet Name</label>
+            <input type="text" id="edit-name" placeholder="Enter pet name" />
+          </div>
+          <div class="pet-form-field">
+            <label for="edit-age">Age</label>
+            <input type="number" id="edit-age" placeholder="Years" min="0" />
+          </div>
+        </div>
+
+        <div class="pet-form-row">
+          <div class="pet-form-field">
+            <label for="edit-weight">Weight (kg)</label>
+            <input type="number" id="edit-weight" placeholder="e.g. 11.5" min="0" step="0.1" />
+          </div>
+          <div class="pet-form-field">
+            <label for="edit-location">Location</label>
+            <input type="text" id="edit-location" placeholder="City, State" />
+          </div>
+        </div>
+
+        <div class="pet-form-row">
+          <div class="pet-form-field">
+            <label for="edit-gender">Gender</label>
+            <select id="edit-gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          <div class="pet-form-field">
+            <label for="edit-type">Type</label>
+            <select id="edit-type">
+              <option value="Dog">Dog</option>
+              <option value="Cat">Cat</option>
+              <option value="Rabbit">Rabbit</option>
+            </select>
+          </div>
+          <div class="pet-form-field">
+            <label for="edit-status">Status</label>
+            <select id="edit-status">
+              <option value="Available">Available</option>
+              <option value="Pending">Pending</option>
+              <option value="Adopted">Adopted</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pet-form-row">
+          <div class="pet-form-field">
+            <label for="edit-description">Description</label>
+            <textarea id="edit-description" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="pet-modal-footer">
+        <button class="pet-cancel-btn" onclick="closeEditModal()">Cancel</button>
+        <button class="primary-btn" onclick="saveEditModal()">Save</button>
+      </div>
+    </div>
+  </div>
+
   <script src="../js/shared.js"></script>
 </body>
 </html>

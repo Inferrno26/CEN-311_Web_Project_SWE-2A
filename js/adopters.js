@@ -1,7 +1,7 @@
-const ADOPTERS_KEY = 'adopters';
+const API_URL = 'http://localhost:5057/api';
 
-let adopters     = [];
-let editingIndex = -1;
+let adopters  = [];
+let editingId = null;
 
 let formBox;
 let formTitle;
@@ -12,17 +12,90 @@ let phoneInput;
 let emailInput;
 let addressInput;
 
+
+async function apiRequest(path, method, body) {
+  const options = { method: method };
+
+  if (body) {
+    options.headers = { 'Content-Type': 'application/json' };
+    options.body    = JSON.stringify(body);
+  }
+
+  const response = await fetch(API_URL + path, options);
+
+  if (!response.ok) {
+    throw new Error('Request failed.');
+  }
+
+  if (response.status === 204) {
+    return null;
+  }
+
+  return await response.json();
+}
+
+function showError(message) {
+  alert(message);
+}
+
+
+async function loadAdopters() {
+  try {
+    adopters = await apiRequest('/adopters', 'GET');
+    renderAdopters();
+  } catch (error) {
+    showError('Could not load adopters. Make sure the API is running.');
+  }
+}
+
+async function createAdopter(adopter) {
+  await apiRequest('/adopters', 'POST', adopter);
+}
+
+async function updateAdopter(id, adopter) {
+  adopter.id = id;
+  await apiRequest('/adopters/' + id, 'PUT', adopter);
+}
+
+async function removeAdopter(id) {
+  await apiRequest('/adopters/' + id, 'DELETE');
+}
+
+
 function openAddForm() {
-  editingIndex = -1;
+  editingId = null;
   formTitle.textContent = 'Add New Adopter';
   clearForm();
+  formBox.classList.add('show');
+}
+
+function openEditForm(id) {
+  let adopter = null;
+  for (let i = 0; i < adopters.length; i++) {
+    if (adopters[i].id === id) {
+      adopter = adopters[i];
+      break;
+    }
+  }
+  if (!adopter) {
+    return;
+  }
+
+  editingId = id;
+  formTitle.textContent = 'Edit Adopter';
+
+  nameInput.value    = adopter.name;
+  phoneInput.value   = adopter.phone;
+  emailInput.value   = adopter.email;
+  addressInput.value = adopter.address;
+
   formBox.classList.add('show');
 }
 
 function closeForm() {
   formBox.classList.remove('show');
   clearForm();
-  editingIndex = -1;
+  editingId = null;
 }
 
 function clearForm() {
@@ -32,14 +105,15 @@ function clearForm() {
   addressInput.value = '';
 }
 
-function saveAdopter() {
+
+async function saveForm() {
   const name    = nameInput.value.trim();
   const phone   = phoneInput.value.trim();
   const email   = emailInput.value.trim();
   const address = addressInput.value.trim();
 
   if (!name || !phone || !email || !address) {
-    alert('Please fill in all fields.');
+    showError('Please fill in all fields.');
     return;
   }
 
@@ -50,38 +124,35 @@ function saveAdopter() {
     address: address
   };
 
-  if (editingIndex === -1) {
-    adopters.push(adopter);
-  } else {
-    adopters[editingIndex] = adopter;
+  try {
+    if (editingId === null) {
+      await createAdopter(adopter);
+    } else {
+      await updateAdopter(editingId, adopter);
+    }
+    closeForm();
+    await loadAdopters();
+  } catch (error) {
+    showError('Could not save the adopter. Please try again.');
   }
-
-  localStorage.setItem(ADOPTERS_KEY, JSON.stringify(adopters));
-  closeForm();
-  renderAdopters();
 }
 
-function editAdopter(index) {
-  const adopter = adopters[index];
-
-  nameInput.value    = adopter.name;
-  phoneInput.value   = adopter.phone;
-  emailInput.value   = adopter.email;
-  addressInput.value = adopter.address;
-
-  editingIndex          = index;
-  formTitle.textContent = 'Edit Adopter';
-  formBox.classList.add('show');
-}
-
-function deleteAdopter(index) {
+async function deleteAdopter(id) {
   if (!confirm('Are you sure you want to delete this adopter?')) {
     return;
   }
 
-  adopters.splice(index, 1);
-  localStorage.setItem(ADOPTERS_KEY, JSON.stringify(adopters));
-  renderAdopters();
+  try {
+    await removeAdopter(id);
+    await loadAdopters();
+  } catch (error) {
+    showError('Could not delete the adopter. Please try again.');
+  }
+}
+
+
+function editAdopter(id) {
+  openEditForm(id);
 }
 
 function renderAdopters() {
@@ -107,8 +178,8 @@ function renderAdopters() {
         '<td>' + adopter.email   + '</td>' +
         '<td>' + adopter.address + '</td>' +
         '<td>' +
-          '<button class="action-btn edit-btn"   onclick="editAdopter('   + i + ')">Edit</button>'   +
-          '<button class="action-btn delete-btn" onclick="deleteAdopter(' + i + ')">Delete</button>' +
+          '<button class="action-btn edit-btn"   onclick="editAdopter('   + adopter.id + ')">Edit</button>'   +
+          '<button class="action-btn delete-btn" onclick="deleteAdopter(' + adopter.id + ')">Delete</button>' +
         '</td>';
       tableBody.appendChild(row);
       matchCount++;
@@ -120,9 +191,8 @@ function renderAdopters() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  adopters    = JSON.parse(localStorage.getItem(ADOPTERS_KEY)) || [];
 
+document.addEventListener('DOMContentLoaded', function() {
   formBox      = document.getElementById('formBox');
   formTitle    = document.getElementById('formTitle');
   tableBody    = document.getElementById('adoptersTableBody');
@@ -134,8 +204,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.getElementById('showFormBtn').addEventListener('click', openAddForm);
   document.getElementById('cancelBtn').addEventListener('click', closeForm);
-  document.getElementById('saveBtn').addEventListener('click', saveAdopter);
+  document.getElementById('saveBtn').addEventListener('click', saveForm);
   searchInput.addEventListener('input', renderAdopters);
 
-  renderAdopters();
+  loadAdopters();
 });

@@ -1,20 +1,58 @@
-const STORAGE_KEY = 'pac_applications';
+const API_URL = 'http://localhost:5057/api';
 
-function getApplications() {
-  const stored = localStorage.getItem(STORAGE_KEY);
-  if (stored) {
-    return JSON.parse(stored);
+let applications = [];
+let editingId    = null;
+let deletingId   = null;
+
+
+async function apiRequest(path, method, body) {
+  const options = { method: method };
+
+  if (body) {
+    options.headers = { 'Content-Type': 'application/json' };
+    options.body    = JSON.stringify(body);
   }
-  return [];
+
+  const response = await fetch(API_URL + path, options);
+
+  if (!response.ok) {
+    throw new Error('Request failed.');
+  }
+
+  if (response.status === 204) {
+    return null;
+  }
+
+  return await response.json();
 }
 
-function saveApplications(apps) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(apps));
+function showError(message) {
+  alert(message);
 }
 
-function generateId() {
-  return 'APP-' + Date.now();
+
+async function loadApplications() {
+  try {
+    applications = await apiRequest('/applications', 'GET');
+    refresh();
+  } catch (error) {
+    showError('Could not load applications. Make sure the API is running.');
+  }
 }
+
+async function createApplication(application) {
+  await apiRequest('/applications', 'POST', application);
+}
+
+async function updateApplication(id, application) {
+  application.id = id;
+  await apiRequest('/applications/' + id, 'PUT', application);
+}
+
+async function removeApplication(id) {
+  await apiRequest('/applications/' + id, 'DELETE');
+}
+
 
 function formatDate(isoDate) {
   if (!isoDate) {
@@ -39,15 +77,15 @@ function getStatusClass(status) {
   return status.toLowerCase();
 }
 
+
 function refresh() {
-  const all    = getApplications();
   const search = document.getElementById('searchInput').value.trim().toLowerCase();
   const status = document.getElementById('statusFilter').value;
 
   const filtered = [];
 
-  for (let i = 0; i < all.length; i++) {
-    const app = all[i];
+  for (let i = 0; i < applications.length; i++) {
+    const app = applications[i];
 
     const nameMatch   = app.adopterName.toLowerCase().includes(search);
     const petMatch    = app.petName.toLowerCase().includes(search);
@@ -61,7 +99,7 @@ function refresh() {
   }
 
   renderTable(filtered);
-  updateStats(all);
+  updateStats(applications);
 }
 
 function renderTable(apps) {
@@ -118,8 +156,6 @@ function updateStats(apps) {
   document.getElementById('stat-rejected').textContent = rejectedCount;
 }
 
-let editingId  = null;
-let deletingId = null;
 
 function openAddModal() {
   editingId = null;
@@ -137,12 +173,11 @@ function openAddModal() {
 }
 
 function openEditModal(id) {
-  const apps = getApplications();
   let app = null;
 
-  for (let i = 0; i < apps.length; i++) {
-    if (apps[i].id === id) {
-      app = apps[i];
+  for (let i = 0; i < applications.length; i++) {
+    if (applications[i].id === id) {
+      app = applications[i];
       break;
     }
   }
@@ -169,7 +204,8 @@ function closeAddModal() {
   document.getElementById('modalOverlay').classList.add('hidden');
 }
 
-function saveApplication() {
+
+async function saveApplication() {
   const adopterName = document.getElementById('adopterName').value.trim();
   const petName     = document.getElementById('petName').value.trim();
   const dateApplied = document.getElementById('dateApplied').value;
@@ -183,35 +219,27 @@ function saveApplication() {
 
   document.getElementById('formError').classList.add('hidden');
 
-  const apps = getApplications();
+  const application = {
+    adopterName: adopterName,
+    petName:     petName,
+    dateApplied: dateApplied,
+    status:      status,
+    notes:       notes
+  };
 
-  if (editingId) {
-    for (let i = 0; i < apps.length; i++) {
-      if (apps[i].id === editingId) {
-        apps[i].adopterName = adopterName;
-        apps[i].petName     = petName;
-        apps[i].dateApplied = dateApplied;
-        apps[i].status      = status;
-        apps[i].notes       = notes;
-        break;
-      }
+  try {
+    if (editingId === null) {
+      await createApplication(application);
+    } else {
+      await updateApplication(editingId, application);
     }
-  } else {
-    const newApp = {
-      id:           generateId(),
-      adopterName:  adopterName,
-      petName:      petName,
-      dateApplied:  dateApplied,
-      status:       status,
-      notes:        notes
-    };
-    apps.push(newApp);
+    closeAddModal();
+    await loadApplications();
+  } catch (error) {
+    showError('Could not save the application. Please try again.');
   }
-
-  saveApplications(apps);
-  closeAddModal();
-  refresh();
 }
+
 
 function openDeleteConfirm(id) {
   deletingId = id;
@@ -223,28 +251,22 @@ function closeDeleteConfirm() {
   document.getElementById('deleteOverlay').classList.add('hidden');
 }
 
-function confirmDelete() {
+async function confirmDelete() {
   if (!deletingId) {
     return;
   }
 
-  const apps    = getApplications();
-  const updated = [];
-
-  for (let i = 0; i < apps.length; i++) {
-    if (apps[i].id !== deletingId) {
-      updated.push(apps[i]);
-    }
+  try {
+    await removeApplication(deletingId);
+    closeDeleteConfirm();
+    await loadApplications();
+  } catch (error) {
+    showError('Could not delete the application. Please try again.');
   }
-
-  saveApplications(updated);
-  closeDeleteConfirm();
-  refresh();
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  refresh();
 
+document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('searchInput').addEventListener('input', refresh);
   document.getElementById('statusFilter').addEventListener('change', refresh);
 
@@ -270,4 +292,6 @@ document.addEventListener('DOMContentLoaded', function() {
       closeDeleteConfirm();
     }
   });
+
+  loadApplications();
 });

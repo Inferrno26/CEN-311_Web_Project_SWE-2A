@@ -112,10 +112,49 @@
   padding: 10px 0;
 }
 
-.card-body .status {
-  margin-left: 20px;
-  float: right;
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
 }
+
+.card-header h4 {
+  margin: 0;
+  font-size: 18px;
+  color: #222;
+}
+
+.card-breed {
+  margin: 0 0 8px;
+  font-size: 14px;
+  color: grey;
+  font-weight: 500;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.action-btn {
+  flex: 1;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.edit-btn   { background: #4caf50; }
+.delete-btn { background: #e74c3c; }
+
+.edit-btn:hover   { background: #43a047; }
+.delete-btn:hover { background: #d63a2b; }
 
 .empty-state {
   background-color: white;
@@ -123,4 +162,119 @@
   padding: 20px;
   color: grey;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.pet-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.pet-modal-overlay.show {
+  display: flex;
+}
+
+.pet-modal {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.pet-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.pet-modal-header h3 {
+  margin: 0;
+  font-size: 17px;
+  color: #222;
+}
+
+.pet-modal-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 22px;
+  color: #aaa;
+  padding: 0 6px;
+  line-height: 1;
+}
+
+.pet-modal-close:hover {
+  color: #555;
+}
+
+.pet-modal-body {
+  padding: 20px;
+}
+
+.pet-form-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.pet-form-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5px;
+}
+
+.pet-form-field label {
+  font-size: 13px;
+  color: #555;
+  font-weight: 600;
+}
+
+.pet-form-field input,
+.pet-form-field select,
+.pet-form-field textarea {
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 14px;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  color: #333;
+}
+
+.pet-form-field textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.pet-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.pet-cancel-btn {
+  background: white;
+  color: #555;
+  border: 1px solid #ddd;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: "Trebuchet MS", sans-serif;
+}
+
+.pet-cancel-btn:hover {
+  background: #f5f5f5;
 }
